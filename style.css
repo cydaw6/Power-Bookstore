@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Open+Sans&display=swap');
+/*
+font-family: 'Noto Sans JP', sans-serif;
+font-family: 'Open Sans', sans-serif;
+
+*/
+
+
+
+
+body {
+	background-color: #a8a8a8;
+	background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png");
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	scrollbar-width: none;
+	/* Firefox */
+}
+
+body::-webkit-scrollbar {
+	display: none;
+}
+
+#maincontainer {
+
+	background-color: #eae3ea;
+
+}
+
+#theform {
+	margin-bottom: 2em;
+	padding: 2em;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+}
+
+#foundedBooksDataColumn {
+
+	overflow: hidden;
+}
+
+#references {
+	max-height: 54.8em;
+	overflow-y: scroll;
+}
+
+
+.srchedBookBox {
+	padding: 1em;
+	color: black;
+	margin-bottom: 2em;
+	height: 5em;
+
+
+	border-radius: 5px;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+}
+
+.srchedBookBox:hover {
+	background-color: #f0f0f0;
+	animation: 0.8s ease-in-out;
+	cursor: pointer;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hidden::-webkit-scrollbar {
+	display: none;
+}
+
+/* Hide scrollbar for IE, Edge add Firefox */
+.scrollbar-hidden {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	/* Firefox */
+}
+
+
+/*		Bookshelf			*/
+#bookshelf {
+	overflow: hidden;
+	background-color: #d2d7df;
+
+}
+
+#bookshelfContainer {
+	max-height: 54.8em;
+	overflow-y: scroll;
+}
+
+.bookBox {
+	padding: 1em;
+	color: black;
+	margin-bottom: 2em;
+	height: 5em;
+
+
+	border-radius: 5px;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+
+
+
+
+
+
+
+
+/*	foundBook tooltip */
+
+.test span {
+	display: none;
+}
+
+.test:hover span {
+	display: block;
+	position: fixed;
+	overflow: hidden;
+}
+
+.tooltipBox {
+	background-color: #f0f2f5;
+	padding: 0.5em;
+}
+
+/*		LOADER ANIMATION		*/
+.loader {
+	border: 8px solid #f3f3f3;
+	/* Light grey */
+	border-top: 8px solid #3498db;
+	/* Blue */
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	display: inline-block;
+	animation: spin 2s linear infinite;
+
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.grey-filter {
+	filter: invert(88%) sepia(7%) saturate(9%) hue-rotate(344deg) brightness(87%) contrast(83%);
+
+}
