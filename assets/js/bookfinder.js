@@ -111,34 +111,35 @@ function updateBookFinder(){
 
             for (var i = 0; i < 1; i++) {
                 div.innerHTML += 
-            '<div class="srchedBookBox foundBtooltip" id="foundBook" box-id="'+index+'">'
-                + '<div style="float: right; top: 0px; right: 0px; color: #b56357;">'+book.refOrigin+'</div>'
-                + '<div class="row">'
-                    + book.title
-                + '</div>'
-                + '<div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">'
-                    + book.authors
-                + '</div>'
-                + '<div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">'
-                    + book.publishedDate.substring(0, 4)
-                + '</div>'
-                +'<span class="tooltipBox">'
-                + '<table style="height: 100px;">'
-                        +'<tbody>'
-                        +'<tr>'
-                            +'<td class="align-middle"><img alt="" src="'+book.image+'" class="img-thumbnail"></td>'
-                            +'<td class="align-middle" style="text-align: left; padding-left: 1em;">'
-                            + '<br><b>' +book.title + '</b>'
-                            + '<br>' +book.authors + ''
-                            + '<br> ' +book.publishedDate + ''
-                            +'</td>'
-                        +'</tr>'
-                        +'</tbody>'
-                    +'</table>'
-                + ''
-                    + ''
-                +'</span>'
-            + '</div>';
+                `
+                <div class="srchedBookBox foundBtooltip" id="foundBook" box-id="${index}">
+                    <div style="float: right; top: 0px; right: 0px; color: #b56357;">${book.refOrigin}</div>
+                    <div class="row">
+                    ${book.title}
+                    </div>
+                    <div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">
+                        ${book.authors}
+                    </div>
+                    <div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">
+                        ${book.publishedDate.substring(0, 4)}
+                    </div>
+                    <span class="tooltipBox">
+                        <table style="height: 100px;">
+                            <tbody>
+                            <tr>
+                                <td class="align-middle"><img alt="" src="${book.image}" class="img-thumbnail"></td>
+                                <td class="align-middle" style="text-align: left; padding-left: 1em;">
+                                    <br>
+                                    <b>${book.title}</b>
+                                    <br>${book.authors}
+                                    <br>${book.publishedDate}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </span>'
+                </div>';
+                `;
             }
 
         }
@@ -152,24 +153,27 @@ function updateBookFinder(){
         }
     } else{
             document.getElementById('references').innerHTML = 
-            '<div class="container" align="center">'
-            +'<br>'
-            +'<br>'
-            +'<br>'
-            +'<table style="height: 4em;">'
-                +'<tbody>'
-                +'<tr>'
-                    +'<td class="align-middle">'
-                    +'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-search grey-filter" viewBox="0 0 16 16">'
-                        +'<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>'
-                    +'</svg>'
-                    +'</td>'
-                    +'<td class="align-middle"><p style="color: #bababa;">Aucune référence trouvée 🧐</p></td>'
-                +'</tr>'
-                +'</tbody>'
-            +'</table>'
-            +'</div>';
-
+            `
+                <div class="container" align="center">
+                <br>
+                <br>
+                <br>
+                <table style="height: 4em;">
+                    <tbody>
+                        <tr>
+                            <td class="align-middle">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-search grey-filter" viewBox="0 0 16 16">'
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>'
+                                </svg>
+                            </td>
+                                <td class="align-middle">
+                                <p style="color: #bababa;">Aucune référence trouvée 🧐</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            `;
     }
     
     tooltips =  document.querySelectorAll('.foundBtooltip span');
