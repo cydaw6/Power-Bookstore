@@ -5,7 +5,7 @@
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
-    <title> Bookshelf</title>
+    <title>Power Bookstore</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">   
@@ -13,7 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     
     
      
@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-light" style="background-color: #b56357!important; font-family: 'Open Sans', sans-serif;">
         <div class="container-fluid" >
           
-          <a class="navbar-brand" href="#"><b><h2>Power Bookshelf</h2></b></a> <!--Book In The Shelf-->
+          <a class="navbar-brand" href="#"><b><h2>Power Bookstore</h2></b></a> <!--Book In The Shelf-->
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -63,70 +63,70 @@
             <form id="theform">
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ISBN</label>
+                  <label for="isbn" class="col-sm-2 col-form-label col-form-label-sm">ISBN</label>
                   <div class="col-sm-10">
-                    <input type="text" id="isbn" name="isbn" class="form-control form-control-sm" id="colFormLabelSm" placeholder="2870270739" onKeyUp="search(this);">
+                    <input type="text" id="isbn" name="isbn" class="form-control form-control-sm" placeholder="2870270739" onKeyUp="search(this.value);">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Titre</label>
+                  <label for="title" class="col-sm-2 col-form-label col-form-label-sm">Titre</label>
                   <div class="col-sm-10">
-                    <input type="text" id="title" name="title" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Le Problème Spinoza">
+                    <input type="text" id="title" name="title" class="form-control form-control-sm" placeholder="Le Problème Spinoza">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Type</label>
+                  <label for="type" class="col-sm-2 col-form-label col-form-label-sm">Type</label>
                   <div class="col-sm-10">
-                    <input type="text" id="type" name="type" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Livre ou Manuscrit ou Journal ou ..">
+                    <input type="text" id="type" name="type" class="form-control form-control-sm" placeholder="Livre ou Manuscrit ou Journal ou ..">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Auteurs</label>
+                  <label for="authors" class="col-sm-3 col-form-label col-form-label-sm">Auteurs</label>
                   <div class="col-sm-9">
-                    <input type="text" id="authors" name="authors" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Karl Marx, Friedrich Engels">
+                    <input type="text" id="authors" name="authors" class="form-control form-control-sm" placeholder="Karl Marx, Friedrich Engels">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Langue</label>
+                  <label for="language" class="col-sm-3 col-form-label col-form-label-sm">Langue</label>
                   <div class="col-sm-9">
-                    <input type="text" id="language" name="language" class="form-control form-control-sm" id="colFormLabelSm" placeholder="fr">
+                    <input type="text" id="language" name="language" class="form-control form-control-sm" placeholder="fr">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Editeur</label>
+                  <label for="publisher" class="col-sm-3 col-form-label col-form-label-sm">Editeur</label>
                   <div class="col-sm-9">
-                    <input type="text" id="publisher" name="publisher" name="isbn"class="form-control form-control-sm" id="colFormLabelSm" placeholder="Les éditions de Minuit">
+                    <input type="text" id="publisher" name="publisher" name="isbn"class="form-control form-control-sm" placeholder="Les éditions de Minuit">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Parution</label>
+                  <label for="publishedDate" class="col-sm-3 col-form-label col-form-label-sm">Parution</label>
                   <div class="col-sm-9">
-                    <input type="text" id="publishedDate" name="publishedDate" class="form-control form-control-sm" id="colFormLabelSm" placeholder="2014">
+                    <input type="text" id="publishedDate" name="publishedDate" class="form-control form-control-sm" placeholder="2014">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Description</label>
+                  <label for="description" class="col-sm-3 col-form-label col-form-label-sm">Description</label>
                   <div class="col-sm-9">
                    
                       <textarea class="form-control" id="description" name="description" id="exampleFormControlTextarea1" rows="2"></textarea>
@@ -136,125 +136,175 @@
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Mots clés</label>
+                  <label for="keyWords" class="col-sm-3 col-form-label col-form-label-sm">Mots clés</label>
                   <div class="col-sm-9">
-                    <input type="text" id="keyWords" name="keyWords" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Histoire, Commune, Manifeste, ...">
+                    <input type="text" id="keyWords" name="keyWords" class="form-control form-control-sm" placeholder="Histoire, Commune, Manifeste, ...">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Prix d'achat</label>
+                  <label for="purchasedPrice" class="col-sm-3 col-form-label col-form-label-sm">Prix d'achat</label>
                   <div class="col-sm-9">
-                    <input type="text" id="purchasedPrice" name="purchasedPrice" class="form-control form-control-sm" id="colFormLabelSm" placeholder="8">
+                    <input type="text" id="purchasedPrice" name="purchasedPrice" class="form-control form-control-sm" placeholder="8">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Prix de vente</label>
+                  <label for="sellingPrice" class="col-sm-3 col-form-label col-form-label-sm">Prix de vente</label>
                   <div class="col-sm-9">
-                    <input type="text" id="sellingPrice" name="sellingPrice" class="form-control form-control-sm" id="colFormLabelSm" placeholder="10.60">
+                    <input type="text" id="sellingPrice" name="sellingPrice" class="form-control form-control-sm" placeholder="10.60">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Emplacement</label>
+                  <label for="location" class="col-sm-3 col-form-label col-form-label-sm">Emplacement</label>
                   <div class="col-sm-9">
-                    <input type="text" id="location" name="location" class="form-control form-control-sm" id="colFormLabelSm" placeholder="R2E3 (Rangée 2 étagère 3)">
+                    <input type="text" id="location" name="location" class="form-control form-control-sm" placeholder="R2E3 (Rangée 2 étagère 3)">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nombre de Pages</label>
+                    <label for="pageCount" class="col-sm-3 col-form-label col-form-label-sm">Nombre de Pages</label>
+                    <div class="col-sm-9">
+                      <input type="text" id="pageCount" name="pageCount" class="form-control form-control-sm" placeholder="10">
+                    </div>
+                  </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="form-group row">
+                  <label for="condition" class="col-sm-3 col-form-label col-form-label-sm">Etat</label>
                   <div class="col-sm-9">
-                    <input type="text" id="pageCount" name="pageCount" class="form-control form-control-sm" id="colFormLabelSm" placeholder="10">
+                    <select class="form-control form-control-sm" id="condition" name="condition">
+                      <option selected="selected">Neuf</option>
+                      <option>Presque neuf</option>
+                      <option>Bon état</option>
+                      <option>Correct</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="form-group row">
+                  <label for="quantity" class="col-sm-3 col-form-label col-form-label-sm">Nombre d'exemplaires</label>
+                  <div class="col-sm-9">
+                    <input type="text" id="quantity" name="quantity" class="form-control form-control-sm" placeholder="10">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nombre d'exemplaires</label>
+                  <label for="image" class="col-sm-3 col-form-label col-form-label-sm">Image</label>
                   <div class="col-sm-9">
-                    <input type="text" id="quantity" name="quantity" class="form-control form-control-sm" id="colFormLabelSm" placeholder="10">
+                    <input type="text" id="image" name="image" class="form-control form-control-sm" placeholder="lien">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Image</label>
+                  <label for="thumbnail" class="col-sm-3 col-form-label col-form-label-sm">Thumbnail</label>
                   <div class="col-sm-9">
-                    <input type="text" id="image" name="image" class="form-control form-control-sm" id="colFormLabelSm" placeholder="lien">
+                    <input type="text" id="thumbnail" name="thumbnail" class="form-control form-control-sm" placeholder="lien">
                   </div>
                   </div>
               </div>
 
               <div class="mb-3">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Thumbnail</label>
+                  <label for="personalNote" class="col-sm-3 col-form-label col-form-label-sm">Note perso</label>
                   <div class="col-sm-9">
-                    <input type="text" id="thumbnail" name="thumbnail" class="form-control form-control-sm" id="colFormLabelSm" placeholder="lien">
+                    <input type="text" id="personalNote" name="personalNote" class="form-control form-control-sm" placeholder="">
                   </div>
                   </div>
               </div>
 
-              <div class="mb-3">
-                <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Note perso</label>
-                  <div class="col-sm-9">
-                    <input type="text" id="personalNote" name="personalNote" class="form-control form-control-sm" id="colFormLabelSm" placeholder="">
-                  </div>
-                  </div>
-              </div>
-            
-              <button type="submit">Ajouter</button>
-
+              <button id="clearFormButton">Vider</button>
+              <button type="submit" id="submitFormButton">Ajouter</button>
             </form>
-            <script>
-              
-            </script>
+            
           </div>
 
           <div class="col-4 scrollbar-hidden" id="foundedBooksDataColumn">
-            
             <br>
             <div class="scrollbar-hidden" id="references">
-
-              
-               
+                  <!-- Found references updated here -->
             </div>
-
           </div>
 
           <div class="col-3 scrollbar-hidden" id="bookshelf">
-           <br><h2>Bibliothèque</h2>
+           <br>
+           <div class="row">
+            <div class="col text-left">
+                <span style="font-size: 2em; font-weight: 500;">Bibliothèque</span>
+            </div>
+            <div class="col " style="text-align: right;">
+              <span style="font-size: 2em; color: grey;" id="bookshelfCount"></span>
+            </div>
+           </div>
            <br>
            <div class="scrollbar-hidden" id="bookshelfContainer">
-
-              
-               
+              <!-- Added books updated here -->
           </div>
           </div>
-
         </div>
-        
-        
-
-      
       </div>
    
-            
-    
   </body>
-  <!--script-->
-  <script src="booksAPIQuery.js"></script>
-  <script src="book.js"></script>
+
+  <!-- GLOBAL  -->
+  <script>
+    // used to save async searched references 
+    window.localStorage.removeItem('bookhistory');
+    
+    let bookShelf = []
+    let tooltips =  undefined;
+    let foundBookBoxes = undefined;
+  </script>
+
+  <!-- Libs -->
+   <script src="./assets/lib/anim.min.js"></script>
+
+  <!-- Connectors -->
+  <script src="./assets/js/connectors/c_google.js"></script>
+  <script src="./assets/js/connectors/c_open_library.js"></script>
+
+  <!--Script parts-->
+  <script src="./assets/js/form.js"></script>
+  <script src="./assets/js/bookshelf.js"></script>
+  <script src="./assets/js/bookfinder.js"></script>
+  <script src="./assets/js/form.js"></script>
+
+
+  <script src="./assets/js/book.js"></script>
+
+  <script>
+
+    // Tooltip follow mouse
+    // http://jsfiddle.net/HJf8q/2/
+    window.onmousemove = function (e) {
+      if(tooltips != undefined){
+        var x = (e.clientX + 20) + 'px',
+        y = (e.clientY + 20) + 'px';
+        for (var i = 0; i < tooltips.length; i++) {
+            tooltips[i].style.top = y;
+            tooltips[i].style.left = x;
+        }
+      }
+     
+    };
+
+    search(9782253168683);
+  </script>
+
 </html>
