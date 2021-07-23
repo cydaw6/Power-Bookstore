@@ -5,17 +5,19 @@
 function updateBookshelf(newbookadded=false){
     // newbookadded true if updating because of new book in bookshelf
     
-    let div = document.getElementById('bookshelfContainer');
-    div.innerHTML = "";
-    for (let index = bookShelf.length-1; index >= 0 ; index--) {
-        let book = bookShelf[index];
+    let div = document.getElementById('bookshelfContainer'); // get bookshelf
+    div.innerHTML = ""; // clear bookshelf
+
+    for (let index = bookShelf.length-1; index >= 0 ; index--) { // iterate on saved books
+        // if last index of list and have just been added animate  
         let animation = "";
         if(newbookadded && (index == bookShelf.length-1)) {
             animation= 'lastAddedbookBox';
-        
         }
 
-        div.innerHTML += `
+        let book = bookShelf[index];
+        div.innerHTML += 
+        `
         <div class="addedBookBox ${animation}" style="position: relative;">
             <div style="position: absolute; top: 0.5em; right: 0.5em; color: #6ebf11;"><i class="bi bi-pencil-fill addBookAction"></i></div>
             <div style="position: absolute; bottom: 0.5em; right: 0.5em; color: #b56357;"><i class="bi bi-trash-fill addBookAction"></i></div>
@@ -44,16 +46,11 @@ function updateBookshelf(newbookadded=false){
     })
     // animation to 0 position
     tl.add({
-        
       targets: '.lastAddedbookBox',
       duration: 1000,
       translateX: 0,
     })
 
-
-
-
-    
     document.getElementById('bookshelfCount').innerHTML = bookShelf.length;
 
 }

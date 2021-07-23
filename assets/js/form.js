@@ -12,6 +12,7 @@ $( "form" ).submit(function( event ) {
         // Add new created book from form to book list
         bookShelf.push(book);
         // reprint bookshelf
+        console.log(book);
         updateBookshelf(true);
     }catch(err){
         console.log('Error during form serialization to book obj : ' + err);

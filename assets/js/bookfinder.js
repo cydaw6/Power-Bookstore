@@ -11,7 +11,6 @@ async function search(isbn){
         // Google api
         const response = await getGoogleBook(isbn);
         if(response){
-            console.log(response);
             let book = {}
             for(const bookData of response.items){
                 let vi = bookData.volumeInfo;
@@ -83,7 +82,8 @@ async function search(isbn){
 
 
     // add books data to localStorage
-    window.localStorage.setItem('bookhistory', JSON.stringify(bookList));      
+    window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
+    // refresh shown references  
     updateBookFinder(); 
 
     
