@@ -1,74 +1,38 @@
 
-async function search(isbn){
-    /* https://stackoverflow.com/questions/27612372/how-to-await-the-ajax-request */
 
-    window.localStorage.setItem('bookhistory', JSON.stringify([])); //clear cache
-    
+async function search(isbn){
+    /* 
+       Await for querys to Apis and push to localStorage, then update display
+        https://stackoverflow.com/questions/27612372/how-to-await-the-ajax-request 
+    */
+
+    // clear cache
+    window.localStorage.setItem('bookhistory', JSON.stringify([]));
     let bookList = [];
 
-    try{
+    try{ // Google api
         
-        // Google api
-        const response = await getGoogleBook(isbn);
-        if(response){
-            let book = {}
-            for(const bookData of response.items){
-                let vi = bookData.volumeInfo;
-                book.isbn = vi.industryIdentifiers[0].identifier; //0 : ISBN 10 | 1: ISBN 13
-                book.title = vi.title;
-                book.type = null;
-                book.authors = vi.authors.join(', ');
-                book.language = vi.language;
-                book.publisher = vi.publisher;
-                book.publishedDate = vi.publishedDate;
-                book.description = vi.description;
-                book.keyWords = null;
-                book.purchasedPrice = null;
-                book.sellingPrice = null;
-                book.location = null;
-                book.pageCount = vi.pageCount;
-                book.image = vi.imageLinks.thumbnail;
-                book.thumbnail = vi.imageLinks.smallThumbnail;
-                book.personalNote = null;
-                book.condition = null;
-                book.refOrigin = "Google";
-                
-                bookList.push(book);
-            }
-        }
+        const google = await (c_google(isbn));
+        const g_rawdata = await google.rawdata();
+        let g_formated_data = await google.formatdata(await g_rawdata);
+
+        g_formated_data.forEach(book => {
+            bookList.push(book)
+        });
+        
     }catch (err) {
         console.log(err);
     }
         
-    try{
-        // Open Library
-        // https://openlibrary.org/developers/api
-        // ISBN API https://openlibrary.org/dev/docs/api/books
-        const openLibResponse = await getOpenLibBook(isbn);
-        if(openLibResponse){
-            let book = {}
-            let vi = openLibResponse;
-            book.isbn = vi.isbn_10;
-            book.title = vi.title;
-            book.type = null;
-            book.authors = null
-            book.language = null;
-            book.publisher = vi.publishers[0];
-            book.publishedDate = vi.publish_date;
-            book.description = vi.description ? vi.description : null;
-            book.keyWords = null;
-            book.purchasedPrice = null;
-            book.sellingPrice = null;
-            book.location = null;
-            book.pageCount = vi.number_of_pages;
-            book.image = vi.covers.length > 0 ? 'https://covers.openlibrary.org/b/id/'+vi.covers[0]+'-M.jpg' : null;
-            book.thumbnail = vi.covers.length > 0 ? 'https://covers.openlibrary.org/b/id/'+vi.covers[0]+'-M.jpg' : null;
-            book.personalNote = null;
-            book.condition = null;
-            book.refOrigin = "Open Library";
-
-            bookList.push(book);            
-        }
+    try{ // Open Library api
+        /*
+            https://openlibrary.org/developers/api
+            ISBN API https://openlibrary.org/dev/docs/api/books
+        */
+        const open_library = await c_open_library(isbn);
+        const o_rawdata = await open_library.rawdata();
+        let o_formated_data = await open_library.formatdata(await o_rawdata);
+        bookList.push(o_formated_data);
 
     } catch(err){
         console.log(err);
@@ -85,37 +49,36 @@ async function search(isbn){
     window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
     // refresh shown references  
     updateBookFinder(); 
-
-    
 }
 
 
 
-// Dynamic found books cards and tooltip
+/* Dynamic found books cards and tooltip */
 
 function updateBookFinder(){
     // loading animation
     document.getElementById('references').innerHTML = '<div style="text-align: center;"><div class="loader"></div></div>';
 
-    
+    // retrieve cache
     let foundReferences = JSON.parse(window.localStorage.getItem('bookhistory'));
     foundReferences = foundReferences ? foundReferences : [];
 
     if(foundReferences.length > 0){
-        // fill up the div with books data
+        
         let div = document.getElementById('references');
         div.innerHTML = "";
+        /* fill up the div with books data */
         for (let index = 0; index < foundReferences.length; index++) {
-
             let book = foundReferences[index];
 
-            for (var i = 0; i < 1; i++) {
                 div.innerHTML += 
                 `
                 <div class="srchedBookBox foundBtooltip" id="foundBook" box-id="${index}">
-                    <div style="float: right; top: 0px; right: 0px; color: #b56357;">${book.refOrigin}</div>
+                    <div style="float: right; top: 0px; right: 0px; color: #b56357;">
+                        ${book.refOrigin}
+                    </div>
                     <div class="row">
-                    ${book.title}
+                        ${book.title}
                     </div>
                     <div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">
                         ${book.authors}
@@ -137,13 +100,12 @@ function updateBookFinder(){
                             </tr>
                             </tbody>
                         </table>
-                    </span>'
-                </div>';
+                    </span>
+                </div>
                 `;
-            }
-
         }
 
+        // add event on click to book cards to give index of current book in cache
         foundBookBoxes = document.querySelectorAll('#foundBook');
         for(const box of foundBookBoxes){
             box.addEventListener('click', event => {
@@ -151,7 +113,9 @@ function updateBookFinder(){
                 updateForm(JSON.parse(window.localStorage.getItem('bookhistory'))[dataIndex]);
             });
         }
-    } else{
+
+    } else{ // Show "nothing found" message
+            
             document.getElementById('references').innerHTML = 
             `
                 <div class="container" align="center">
@@ -175,9 +139,9 @@ function updateBookFinder(){
                 </div>
             `;
     }
-    
+
+    // add found book cards to tooltips obj list
     tooltips =  document.querySelectorAll('.foundBtooltip span');
-    
     
     //window.localStorage.removeItem('bookhistory');
 }
