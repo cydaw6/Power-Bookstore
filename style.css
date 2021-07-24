@@ -30,7 +30,7 @@ body::-webkit-scrollbar {
 
 /*    FORM  	*/
 #theform {
-	margin-bottom: 2em;
+	margin-bottom: 0em;
 	padding: 2em;
 	background-color: white;
 	border-radius: 5px;
@@ -38,26 +38,27 @@ body::-webkit-scrollbar {
 
 }
 
-#clearFormButton{
+#clearFormButton {
 	color: red;
 	border: 1px solid red;
 	border-radius: 4px;
 	padding: 0.4em 1.2em;
 }
 
-#clearFormButton:hover{
+#clearFormButton:hover {
 	background-color: red;
 	color: white;
 	transition: 0.1s ease-in;
 }
 
-#submitFormButton{
+#submitFormButton {
 	color: #6ebf11;
 	border: 1px solid #6ebf11;
 	border-radius: 4px;
 	padding: 0.4em 1.2em;
 }
-#submitFormButton:hover{
+
+#submitFormButton:hover {
 	background-color: #6ebf11;
 	color: white;
 	transition: 0.1s ease-in;
@@ -97,8 +98,12 @@ body::-webkit-scrollbar {
 	cursor: pointer;
 }
 
+.warning-box {
+	border: 2px red solid;
+}
 
-.addedBookBox{
+
+.addedBookBox {
 	padding: 1em;
 	color: black;
 	margin-bottom: 2em;
@@ -112,21 +117,21 @@ body::-webkit-scrollbar {
 }
 
 
-.addedBookBox:hover{
+.addedBookBox:hover {
 	background-color: #f0f0f0;
 	animation: 0.8s ease-in-out;
 }
 
 
-.addedBookBox img{
+.addedBookBox img {
 	max-height: 9em;
 }
 
-.addBookAction:hover{
+.addBookAction:hover {
 	cursor: pointer;
 }
 
-.imgForCard{
+.imgForCard {
 	height: 100%;
 }
 
@@ -144,7 +149,7 @@ body::-webkit-scrollbar {
 }
 
 
-/*		Bookshelf			*/
+/*		Bookshelf		*/
 #bookshelf {
 	overflow: hidden;
 	background-color: #d2d7df;
@@ -152,12 +157,12 @@ body::-webkit-scrollbar {
 }
 
 #bookshelfContainer {
-	max-height: 54.8em;
-	min-height: 54.8em;
+	max-height: 46.8em;
+	min-height: 46.8em;
 	overflow-y: scroll;
-	box-shadow: 2px 1px 10px 9px rgba(0,0,0,0.21) inset;
-	-webkit-box-shadow: 2px 1px 10px 9px rgba(0,0,0,0.21) inset;
-	-moz-box-shadow: 2px 1px 10px 9px rgba(0,0,0,0.21) inset;
+	box-shadow: 2px 1px 10px 9px rgba(0, 0, 0, 0.21) inset;
+	-webkit-box-shadow: 2px 1px 10px 9px rgba(0, 0, 0, 0.21) inset;
+	-moz-box-shadow: 2px 1px 10px 9px rgba(0, 0, 0, 0.21) inset;
 	border-radius: 4px;
 }
 
@@ -221,3 +226,18 @@ body::-webkit-scrollbar {
 
 }
 
+.noselect {
+	-webkit-touch-callout: none;
+	/* iOS Safari */
+	-webkit-user-select: none;
+	/* Safari */
+	-khtml-user-select: none;
+	/* Konqueror HTML */
+	-moz-user-select: none;
+	/* Old versions of Firefox */
+	-ms-user-select: none;
+	/* Internet Explorer/Edge */
+	user-select: none;
+	/* Non-prefixed version, currently
+									supported by Chrome, Edge, Opera and Firefox */
+}

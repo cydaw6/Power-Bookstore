@@ -28,7 +28,7 @@ function c_google(isbn){
                     book.authors = vi.authors.join(', ');
                     book.language = vi.language;
                     book.publisher = vi.publisher;
-                    book.publishedDate = vi.publishedDate;
+                    book.publishedDate = vi.publishedDate.split('-').reverse().join('-');
                     book.description = vi.description;
                     book.keyWords = null;
                     book.purchasedPrice = null;

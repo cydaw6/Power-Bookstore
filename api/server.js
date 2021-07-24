@@ -2,7 +2,8 @@
 
 // Express
 const express = require('express');
-const app = express()
+const app = express();
+var cors = require('cors');
 const port = 7045
 
 // fs
@@ -84,7 +85,12 @@ book1.save(function (err, book){
 });
 */
 
+
 /* Server */
+// use it before all route definitions
+app.use(cors({origin: 'http://127.0.0.1:5500'}));
+
+
 // create a route for the app
 app.get('/', (req, res) => {
     res.writeHead(404);

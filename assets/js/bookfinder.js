@@ -1,6 +1,8 @@
 
 
 async function search(isbn){
+    // loading animation
+    document.getElementById('references').innerHTML = '<div style="text-align: center;"><div class="loader"></div></div>';
     /* 
        Await for querys to Apis and push to localStorage, then update display
         https://stackoverflow.com/questions/27612372/how-to-await-the-ajax-request 
@@ -9,6 +11,22 @@ async function search(isbn){
     // clear cache
     window.localStorage.setItem('bookhistory', JSON.stringify([]));
     let bookList = [];
+
+
+    try{ // Personal db
+        
+        const personal_database = await c_db(isbn);
+        const db_rawdata = await personal_database.rawdata();
+        let db_formated_data = await personal_database.formatdata(await db_rawdata);
+        db_formated_data.forEach(book =>{
+            bookList.push(book);
+        })
+        
+
+    }catch (err){
+        console.log(`Error for personal db connector: ${err}`);
+    }
+
 
     try{ // Google api
         
@@ -20,8 +38,8 @@ async function search(isbn){
             bookList.push(book)
         });
         
-    }catch (err) {
-        console.log(err);
+    }catch (err){
+        console.log(`Error for google connector: ${err}`);
     }
         
     try{ // Open Library api
@@ -34,8 +52,8 @@ async function search(isbn){
         let o_formated_data = await open_library.formatdata(await o_rawdata);
         bookList.push(o_formated_data);
 
-    } catch(err){
-        console.log(err);
+    }catch(err){
+        console.log(`Error for open library connector: ${err}`);
     }
 
 
@@ -56,8 +74,6 @@ async function search(isbn){
 /* Dynamic found books cards and tooltip */
 
 function updateBookFinder(){
-    // loading animation
-    document.getElementById('references').innerHTML = '<div style="text-align: center;"><div class="loader"></div></div>';
 
     // retrieve cache
     let foundReferences = JSON.parse(window.localStorage.getItem('bookhistory'));
@@ -71,39 +87,44 @@ function updateBookFinder(){
         for (let index = 0; index < foundReferences.length; index++) {
             let book = foundReferences[index];
 
-                div.innerHTML += 
-                `
-                <div class="srchedBookBox foundBtooltip" id="foundBook" box-id="${index}">
-                    <div style="float: right; top: 0px; right: 0px; color: #b56357;">
-                        ${book.refOrigin}
-                    </div>
-                    <div class="row">
-                        ${book.title}
-                    </div>
-                    <div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">
-                        ${book.authors}
-                    </div>
-                    <div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">
-                        ${book.publishedDate.substring(0, 4)}
-                    </div>
-                    <span class="tooltipBox">
-                        <table style="height: 100px;">
-                            <tbody>
-                            <tr>
-                                <td class="align-middle"><img alt="" src="${book.image}" class="img-thumbnail"></td>
-                                <td class="align-middle" style="text-align: left; padding-left: 1em;">
-                                    <br>
-                                    <b>${book.title}</b>
-                                    <br>${book.authors}
-                                    <br>${book.publishedDate}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </span>
+            let warning = '';
+            if(book.refOrigin == 'already saved!'){
+                warning = 'warning-box'
+            }
+
+            div.innerHTML += 
+            `
+            <div class="srchedBookBox foundBtooltip ${warning}" id="foundBook" box-id="${index}">
+                <div style="float: right; top: 0px; right: 0px; color: #b56357;">
+                    ${book.refOrigin}
                 </div>
-                `;
-        }
+                <div class="row">
+                    ${book.title}
+                </div>
+                <div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">
+                    ${book.authors}
+                </div>
+                <div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">
+                    ${book.publishedDate}
+                </div>
+                <span class="tooltipBox">
+                    <table style="height: 100px;">
+                        <tbody>
+                        <tr>
+                            <td class="align-middle"><img alt="" src="${book.image}" class="img-thumbnail"></td>
+                            <td class="align-middle" style="text-align: left; padding-left: 1em;">
+                                <br>
+                                <b>${book.title}</b>
+                                <br>${book.authors}
+                                <br>${book.publishedDate}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </span>
+            </div>
+            `;
+    }
 
         // add event on click to book cards to give index of current book in cache
         foundBookBoxes = document.querySelectorAll('#foundBook');
@@ -131,7 +152,7 @@ function updateBookFinder(){
                                 </svg>
                             </td>
                                 <td class="align-middle">
-                                <p style="color: #bababa;">Aucune référence trouvée 🧐</p>
+                                <p style="color: #bababa;" class="noselect">Aucune référence trouvée 🧐</p>
                             </td>
                         </tr>
                     </tbody>

@@ -13,18 +13,47 @@ function c_open_library(isbn){
                     dataType: "json"
                     });
             },
-            formatdata: function(rawdata){
+            formatdata: async function(rawdata){
                 let bookList = [];
                 let book = {};
-                let vi = rawdata;
+                const vi = rawdata;
 
                 book.isbn = vi.isbn_10;
                 book.title = vi.title;
                 book.type = null;
-                book.authors = null
                 book.language = null;
                 book.publisher = vi.publishers[0];
-                book.publishedDate = vi.publish_date;
+                
+                //-- Authors
+                let ppl = [];
+                for (let index = 0; index < vi.authors.length; index++) {
+                    const element = vi.authors[index];
+                    const curr_author = await this.rawauthor(element.key.substring(9));
+                    ppl.push(curr_author.name);
+                }
+                book.authors = ppl.join(', ');
+                //
+                //-- Date format
+                let date = vi.publish_date.split(',');
+                let month = {
+                                "Jan": '01',
+                                "Feb": '02',
+                                "Mar": '03',
+                                "Apr": '04',
+                                "May": '05',
+                                "Jun": '06',
+                                "Jul": '07',
+                                "Aug": '08',
+                                "Sep": '09',
+                                "Oct": '10',
+                                "Nov": '11',
+                                "Dec": '12'
+                            }[date[0].substring(0, 3)];
+                let day = date[0].split(' ')[1];
+                let year = date[1].trim();
+                book.publishedDate = `${day}-${month}-${year}`;
+                //
+
                 book.description = vi.description ? vi.description : null;
                 book.keyWords = null;
                 book.purchasedPrice = null;
@@ -38,6 +67,13 @@ function c_open_library(isbn){
                 book.refOrigin = "Open Library";
 
                 return book;
+            },
+            rawauthor: function(code){
+                return $.ajax({
+                    url: "https://openlibrary.org/authors/"+code+".json",
+                    method: "GET", 
+                    dataType: "json"
+                    });
             }
     };
 }
