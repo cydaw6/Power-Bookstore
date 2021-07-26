@@ -12,6 +12,24 @@ async function search(isbn){
     window.localStorage.setItem('bookhistory', JSON.stringify([]));
     let bookList = [];
 
+    // Other api
+    try{
+        // https://allorigins.win/
+        //https://www.freecodecamp.org/news/client-side-web-scraping-with-javascript-using-jquery-and-regex-5b57a271cb86/
+        $.get('https://api.allorigins.win/get?url=' + encodeURIComponent(`https://www.bookfinder.com/search/?isbn=9782253168683&st=xl&ac=qr`), function (data) {
+                      console.log(data.contents);
+                  });
+
+        const book_finder = await c_book_finder(isbn);
+        console.log(book_finder);
+        const bf_rawdata = await book_finder.rawdata();
+        console.log(bf_rawdata);
+        let bf_formated_data = await book_finder.formatdata(await bf_rawdata);
+        
+
+    }catch (err){
+        console.log(err);
+    }
 
     try{ // Personal db
         
@@ -24,7 +42,7 @@ async function search(isbn){
         
 
     }catch (err){
-        console.log(`Error for personal db connector: ${err}`);
+        //console.log(`Error for personal db connector: ${err}`);
     }
 
 
@@ -35,6 +53,7 @@ async function search(isbn){
         let g_formated_data = await google.formatdata(await g_rawdata);
 
         g_formated_data.forEach(book => {
+            console.log()
             bookList.push(book)
         });
         
@@ -53,11 +72,13 @@ async function search(isbn){
         bookList.push(o_formated_data);
 
     }catch(err){
-        console.log(`Error for open library connector: ${err}`);
+        //console.log(`Error for open library connector: ${err}`);
     }
 
 
-    // free api
+    
+    
+    
     // https://www.programmableweb.com/news/10-most-popular-apis-books/brief/2020/01/26
     //https://blog.api.rakuten.net/top-10-best-books-apis/
     // cool project https://github.com/internetarchive/bookreader
@@ -89,7 +110,7 @@ function updateBookFinder(){
 
             let warning = '';
             if(book.refOrigin == 'already saved!'){
-                warning = 'warning-box'
+                warning = 'warning-box';
             }
 
             div.innerHTML += 

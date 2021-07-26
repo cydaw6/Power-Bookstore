@@ -21,22 +21,24 @@ function c_google(isbn){
                 let book = {}
 
                 for(const bookData of rawdata.items){
+                    
                     let vi = bookData.volumeInfo;
                     book.isbn = vi.industryIdentifiers[0].identifier; //0 : ISBN 10 | 1: ISBN 13
                     book.title = vi.title;
-                    book.type = null;
                     book.authors = vi.authors.join(', ');
                     book.language = vi.language;
                     book.publisher = vi.publisher;
                     book.publishedDate = vi.publishedDate.split('-').reverse().join('-');
                     book.description = vi.description;
+                    book.pageCount = vi.pageCount;
+                    book.image = vi.imageLinks == undefined ? null : vi.imageLinks.thumbnail;
+                    book.thumbnail = vi.imageLinks == undefined  ? null : vi.imageLinks.smallThumbnail;
+                    book.type = null;
                     book.keyWords = null;
                     book.purchasedPrice = null;
                     book.sellingPrice = null;
                     book.location = null;
-                    book.pageCount = vi.pageCount;
-                    book.image = vi.imageLinks.thumbnail;
-                    book.thumbnail = vi.imageLinks.smallThumbnail;
+                    
                     book.personalNote = null;
                     book.condition = null;
                     
@@ -44,7 +46,7 @@ function c_google(isbn){
                     
                     bookList.push(book);
                 }
-
+                console.log(book);
                 return bookList;
             }
     };

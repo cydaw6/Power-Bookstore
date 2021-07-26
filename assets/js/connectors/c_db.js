@@ -23,3 +23,5 @@ function c_db(isbn){
             }
     };
 }
+
+//http://isbn.mobpage.org/result.php?isbn=9789896800932
