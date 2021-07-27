@@ -4,13 +4,16 @@
 const express = require('express');
 const app = express();
 var cors = require('cors');
-const port = 7045
+const port = 7046;
+
+require('./bookfinderSender')();
 
 // fs
 const fs = require("fs");
+// adding secret password
 let dbpasswd = fs.readFileSync(__dirname + "/dbpasswd.txt", "utf8");
 
-// Mongoose
+/*----  Mongoose connection and schemas ---- */
 const mongoose = require('mongoose');
 // using mongodb atlas for facility
 let url = 'mongodb+srv://admin:'+dbpasswd+'@bastion-1.tpu1w.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
@@ -86,30 +89,45 @@ book1.save(function (err, book){
 */
 
 
-/* Server */
+
+
+
+/* ----- Server ----- */
 // use it before all route definitions
-app.use(cors({origin: 'http://127.0.0.1:5500'}));
+app.use(cors({
+    //origin: 'http://127.0.0.1:5500'
+    origin: '*'
+}));
 
 
-// create a route for the app
+// Create a route for the app
 app.get('/', (req, res) => {
     res.writeHead(404);
 });
 
-// another route
+// Api response all books found for each api connected (connectors) 
+// Rq : own db added as a connector
+// About express routes : https://stackoverflow.com/a/38201623/14270185
+app.get('/isbn/:isbn', (req, res) => {
+    res.writeHead(200, {
+        'Content-type': 'text/json; charset=utf-8'
+    });
+    bookFinderSender(req.params.isbn, res);
+});
+
+// get all books from own database
 app.get('/books', (req, res) => {
     res.writeHead(200, {
         'Content-type': 'text/json; charset=utf-8'
     })
+
     Bookstore.find(null, function(err, x) {
         if (err){
             throw err;
         }
-
         res.end((JSON.stringify(x, null, 4)));
     });
 });
-
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

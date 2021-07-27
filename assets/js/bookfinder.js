@@ -12,12 +12,21 @@ async function search(isbn){
     window.localStorage.setItem('bookhistory', JSON.stringify([]));
     let bookList = [];
 
+    try{
+        let x = await $.ajax({
+            url: "https://cydaw6-power-bookstore-56jqp6pqh7qw6-7046.githubpreview.dev/isbn/"+isbn,
+            dataType: "json"
+            });
+    }catch(err){
+        console.log(err);
+    }
+
     // Other api
     try{
         // https://allorigins.win/
         //https://www.freecodecamp.org/news/client-side-web-scraping-with-javascript-using-jquery-and-regex-5b57a271cb86/
         $.get('https://api.allorigins.win/get?url=' + encodeURIComponent(`https://www.bookfinder.com/search/?isbn=9782253168683&st=xl&ac=qr`), function (data) {
-                      console.log(data.contents);
+                      //console.log(data.contents);
                   });
 
         const book_finder = await c_book_finder(isbn);
