@@ -10,7 +10,7 @@ module.exports = function() {
                 formatdata: async function(rawdata){
                     let bookList = [];
                     let book = {};
-                    const vi = rawdata;
+                    const vi = rawdata.data;
     
                     book.isbn = vi.isbn_10;
                     book.title = vi.title;

@@ -12,7 +12,7 @@ module.exports = function() {
                     let bookList = [];
                     let book = {}
     
-                    for(const bookData of rawdata.items){
+                    for(const bookData of rawdata.data.items){
                         let vi = bookData.volumeInfo;
                         book.isbn = vi.industryIdentifiers[0].identifier; //0 : ISBN 10 | 1: ISBN 13
                         book.title = vi.title;

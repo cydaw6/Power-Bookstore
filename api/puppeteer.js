@@ -13,7 +13,9 @@ const puppeteer = require('puppeteer');
 let currr;
 async function run (url) {
     const browser = await puppeteer.launch({headless: true, args:['--no-sandbox',
-	'--disable-setuid-sandbox']});
+		'--disable-setuid-sandbox'],
+		userDataDir: './myUserDataDir',
+	});
 	const page = await browser.newPage();
 	
 	await page.goto(url);
