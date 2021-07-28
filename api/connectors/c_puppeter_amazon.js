@@ -34,24 +34,6 @@ async function c_puppeteer (isbn) {
     // Author
     const [x1] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
     const author = await (await x1.getProperty('textContent')).jsonValue();
-    
-    // publisher
-    const [x2] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
-    const publisher = await (await x1.getProperty('textContent')).jsonValue();
-    // language
-    const [x3] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
-    const language = await (await x1.getProperty('textContent')).jsonValue();
-    // isbn10
-    const [x4] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
-    const isbn10 = await (await x1.getProperty('textContent')).jsonValue();
-    // isbn13
-    const [x5] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
-    const isbn13 = await (await x1.getProperty('textContent')).jsonValue();
-    // number of pages
-    const [x6] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
-    const pages = await (await x1.getProperty('textContent')).jsonValue();
-
-
 	// new price
 	const [x7] = await page.$x('//*[@id="newBuyBoxPrice"]');
 	const priceN = parseFloat((await (await x7.getProperty('textContent')).jsonValue()).replace(',', '.'));
@@ -111,7 +93,8 @@ async function c_puppeteer (isbn) {
             min: parseFloat(Math.min(...allusedPrices).toLocaleString("en-EN")),
             max: parseFloat(Math.max(...allusedPrices).toLocaleString("en-EN")),
             mean:  parseFloat((allusedPrices.reduce((a, b) => a + b) / allusedPrices.length).toLocaleString("en-EN"))
-        }
+        },
+        refOrigin: 'amazon'
         });
 
     //await page.waitForXPath('//*[@id="newBuyBoxPrice"]'); // would have to wait for worldcat because price requested trough network (it load)
