@@ -7,6 +7,7 @@
 //--------------------
 
 //https://www.toptal.com/puppeteer/headless-browser-puppeteer-tutorial
+// https://www.py4u.net/discuss/277159
 
 
 const puppeteer = require('puppeteer');
@@ -30,12 +31,34 @@ async function c_puppeteer (isbn) {
     // Titre
 	const [x] = await page.$x('//*[@id="productTitle"]');
 	const title = await (await x.getProperty('textContent')).jsonValue();
+    // Author
+    const [x1] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
+    const author = await (await x1.getProperty('textContent')).jsonValue();
+    
+    // publisher
+    const [x2] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
+    const publisher = await (await x1.getProperty('textContent')).jsonValue();
+    // language
+    const [x3] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
+    const language = await (await x1.getProperty('textContent')).jsonValue();
+    // isbn10
+    const [x4] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
+    const isbn10 = await (await x1.getProperty('textContent')).jsonValue();
+    // isbn13
+    const [x5] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
+    const isbn13 = await (await x1.getProperty('textContent')).jsonValue();
+    // number of pages
+    const [x6] = await page.$x('//*[@id="bylineInfo"]/span/span[1]/a[1]');
+    const pages = await (await x1.getProperty('textContent')).jsonValue();
+
+
 	// new price
-	const [x2] = await page.$x('//*[@id="newBuyBoxPrice"]');
-	const priceN = parseFloat((await (await x2.getProperty('textContent')).jsonValue()).replace(',', '.'));
+	const [x7] = await page.$x('//*[@id="newBuyBoxPrice"]');
+	const priceN = parseFloat((await (await x7.getProperty('textContent')).jsonValue()).replace(',', '.'));
 	// image
 	const [img] = await page.$x('//*[@id="imgBlkFront"]');
     const thumbnail = await (await img.getProperty('src')).jsonValue();
+
 
     // Get link of used books
     const [el3] = await page.$x('//*[@id="tmmSwatches"]/ul/li[4]/span/span[3]/span[1]/span/a');
@@ -43,33 +66,15 @@ async function c_puppeteer (isbn) {
     const usedBLink = await link.jsonValue();
     // Navigate to the link we got
     await page.goto(`${(await usedBLink)}`);
-
-    // waiting for our divs to come
-    await page.waitForSelector('#all-offers-display-scroller');
-    // https://www.py4u.net/discuss/277159
-    const delay = 3000;
-    let preCount = 0;
-    let postCount = 0;
-    do {
-        preCount = await getCount(page);
-        await scrollDown(page);
-        await page.waitFor(delay);
-        postCount = await getCount(page);
-    } while (postCount > preCount);
-
-
-
-
-
-
-
     // waiting for our divs to come
     await page.waitForSelector('#aod-offer');
     // used price format
-    let usedPrices = await page.evaluate((priceN) => {
+    let [usedPrices, allusedPrices] = await page.evaluate((priceN) => {
         let results = [];
+        let allusedPrices = [];
         let items = document.querySelectorAll('#aod-offer');
         
+
         for (const item of items) {
             let condition = item.querySelector('h5').innerText.replace("D'occasion - ", '');
             let usedPrice = parseFloat((item.querySelector('span.a-offscreen').innerText).replace(',', '.'));
@@ -87,21 +92,26 @@ async function c_puppeteer (isbn) {
                     deliveryPrice: deliveryPrice,
                     totalPrice: totalPrice,
                 });
+                allusedPrices.push(totalPrice);
             }
         }
         
-        return results;
+        return [results, allusedPrices];
     }, priceN);
 
-
     
-	
     browser.close();
 	console.log({
-        title, 
+        title,
+        author,
         priceN, 
         thumbnail, 
-        usedPrices
+        usedPrices,
+        allusedPrices:{
+            min: parseFloat(Math.min(...allusedPrices).toLocaleString("en-EN")),
+            max: parseFloat(Math.max(...allusedPrices).toLocaleString("en-EN")),
+            mean:  parseFloat((allusedPrices.reduce((a, b) => a + b) / allusedPrices.length).toLocaleString("en-EN"))
+        }
         });
 
     //await page.waitForXPath('//*[@id="newBuyBoxPrice"]'); // would have to wait for worldcat because price requested trough network (it load)
@@ -121,14 +131,3 @@ run('https://www.worldcat.org/isbn/2253129453')
 
 
 c_puppeteer('2253129453');
-
-
-async function getCount(page) {
-    return await page.$$eval('#all-offers-display-scroller', a => a.length);
-  }
-  
-  async function scrollDown(page) {
-    await page.$eval('#all-offers-display-scroller:last-child', e => {
-      e.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
-    });
-  }
