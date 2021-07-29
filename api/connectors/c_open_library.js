@@ -1,4 +1,5 @@
 const axios = require('axios');
+require('./globals')();
 
 module.exports = function() {
     this.c_open_library = function(isbn){
@@ -9,15 +10,9 @@ module.exports = function() {
                 },
                 formatdata: async function(rawdata){
                     let bookList = [];
-                    let book = {};
+                    let book = new BookShell();
                     const vi = rawdata.data;
     
-                    book.isbn = vi.isbn_10;
-                    book.title = vi.title;
-                    book.type = null;
-                    book.language = null;
-                    book.publisher = vi.publishers[0];
-                    
                     //-- Authors
                     let ppl = [];
                     for (let index = 0; index < vi.authors.length; index++) {
@@ -26,8 +21,8 @@ module.exports = function() {
                         const curr_author = await this.rawauthor(element.key.substring(9));
                         ppl.push(curr_author.data.name);
                     }
-                    book.authors = ppl.join(', ');
-                    //
+
+                    book.authors = ppl;
                     //-- Date format
                     let date = vi.publish_date.split(',');
                     let month = {
@@ -46,20 +41,17 @@ module.exports = function() {
                                 }[date[0].substring(0, 3)];
                     let day = date[0].split(' ')[1];
                     let year = date[1].trim();
-                    book.publishedDate = `${day}-${month}-${year}`;
-                    //
-    
-                    book.description = vi.description ? vi.description : null;
-                    book.keyWords = null;
-                    book.purchasedPrice = null;
-                    book.sellingPrice = null;
-                    book.location = null;
-                    book.pageCount = vi.number_of_pages;
-                    book.image = vi.covers.length > 0 ? 'https://covers.openlibrary.org/b/id/'+vi.covers[0]+'-M.jpg' : null;
-                    book.thumbnail = vi.covers.length > 0 ? 'https://covers.openlibrary.org/b/id/'+vi.covers[0]+'-M.jpg' : null;
-                    book.personalNote = null;
-                    book.condition = null;
-                    book.refOrigin = "Open Library";
+                    book.publishedDate              = `${day}-${month}-${year}`;
+
+                    book.isbn_10                    = vi.isbn_10;
+                    book.isbn_13                    = vi.isbn_13;
+                    book.title                      = vi.title;
+                    book.publisher                  = vi.publishers[0];
+                    book.page_count                 = vi.number_of_pages;
+                    book.image                      = vi.covers.length > 0 ? 'https://covers.openlibrary.org/b/id/'+vi.covers[0]+'-M.jpg' : null;
+                    book.thumbnail                  = vi.covers.length > 0 ? 'https://covers.openlibrary.org/b/id/'+vi.covers[0]+'-M.jpg' : null;
+                    book.description                = vi.description ? vi.description : null;
+                    book.ref_origin                 = "Open Library";
     
                     return book;
                 },

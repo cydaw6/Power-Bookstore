@@ -6,9 +6,11 @@ const express = require('express');
 const app = express();
 var cors = require('cors');
 //
-const axios = require('axios');
 require('./connectors/c_google.js')();
 require('./connectors/c_open_library.js')();
+require('./connectors/c_pptr_amazon')();
+require('./connectors/c_pptr_worldcat')();
+require('./connectors/c_pptr_cal')();
 // fs
 const fs = require("fs");
 // Mongoose
@@ -141,7 +143,14 @@ async function bookFinderSender(isbn, res) {
             bookList.push(book);
         })
         
-        bookList = bookList?.filter(book => book.isbn == isbn);
+        try{
+            bookList.push(await c_pptr_cal(isbn));
+        }catch(err){
+            console.log(err);
+        }
+
+
+        bookList = bookList?.filter(book => (book.isbn_10 == isbn) || (book.isbn_13 == isbn));
 
         res.end((JSON.stringify(bookList, null, 4))); // output de l'api
   

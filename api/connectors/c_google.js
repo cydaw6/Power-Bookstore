@@ -1,5 +1,6 @@
 /*		GOOGLE 		*/
 const axios = require('axios');
+require('./globals')();
 
 module.exports = function() {
     this.c_google = function(isbn){
@@ -10,29 +11,24 @@ module.exports = function() {
                 },
                 formatdata: function(rawdata){
                     let bookList = [];
-                    let book = {}
+                    let book = new BookShell();
     
                     for(const bookData of rawdata.data.items){
                         let vi = bookData.volumeInfo;
-                        book.isbn = vi.industryIdentifiers[0].identifier; //0 : ISBN 10 | 1: ISBN 13
-                        book.title = vi.title;
-                        book.type = null;
-                        book.authors = vi.authors.join(', ');
-                        book.language = vi.language;
-                        book.publisher = vi.publisher;
-                        book.publishedDate = vi.publishedDate.split('-').reverse().join('-');
-                        book.description = vi.description;
-                        book.keyWords = null;
-                        book.purchasedPrice = null;
-                        book.sellingPrice = null;
-                        book.location = null;
-                        book.pageCount = vi.pageCount;
-                        book.image = vi.imageLinks.thumbnail;
-                        book.thumbnail = vi.imageLinks.smallThumbnail;
-                        book.personalNote = null;
-                        book.condition = null;
+
+                        book.isbn_10           = vi.industryIdentifiers[0].identifier;
+                        book.isbn_13           = vi.industryIdentifiers[1].identifier;
+                        book.title             = vi.title;
+                        book.authors           = vi.authors;
+                        book.language          = vi.language;
+                        book.publisher         = vi.publisher;
+                        book.published_date    = vi.publishedDate.split('-').reverse().join('-');
+                        book.description       = vi.description;
+                        book.page_count        = vi.pageCount;
+                        book.image             = vi.imageLinks.thumbnail;
+                        book.thumbnail         = vi.imageLinks.smallThumbnail;
+                        book.ref_origin        = "Google";
                         
-                        book.refOrigin = "Google";
                         
                         bookList.push(book);
                     }
