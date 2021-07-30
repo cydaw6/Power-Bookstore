@@ -12,11 +12,8 @@ async function search(isbn){
     window.localStorage.setItem('bookhistory', JSON.stringify([]));
     let bookList = [];
 
-    
-
-    
-
     // Other api
+    /*
     try{
         // https://allorigins.win/
         //https://www.freecodecamp.org/news/client-side-web-scraping-with-javascript-using-jquery-and-regex-5b57a271cb86/
@@ -34,6 +31,7 @@ async function search(isbn){
     }catch (err){
         console.log(err);
     }
+    */
 
     try{ // Personal db
         
@@ -85,7 +83,7 @@ async function search(isbn){
             url: "https://cydaw6-power-bookstore-56jqp6pqh7qw6-7046.githubpreview.dev/isbn/"+isbn,
             dataType: "json"
             });
-        console.log(x);
+        console.log('ok ? :'+x);
         //bookList.push(...(await x));
     }catch(err){
         console.log(err);
