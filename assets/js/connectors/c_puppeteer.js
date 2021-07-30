@@ -17,10 +17,12 @@ function c_puppeteer(isbn){
                 for (let index = 0; index < rawdata.length; index++) {
                     let elem = rawdata[index];
                     if(elem){
-                        bookList.push.apply(bookList, elem);
+                        for (const book of elem) {
+                            bookList.push(book);
+                        }
                     }
                 }
-                console.log(bookList)
+                console.log(bookList);
                 return bookList;
             }
 
