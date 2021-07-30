@@ -79,11 +79,9 @@ async function search(isbn){
     }
 
     try{
-        let x = await $.ajax({
-            url: "https://cydaw6-power-bookstore-56jqp6pqh7qw6-7046.githubpreview.dev/isbn/"+isbn,
-            dataType: "json"
-            });
-        console.log('ok ? :'+x);
+        let xx = c_puppeteer(isbn);
+        xx.formatdata();
+        
         //bookList.push(...(await x));
     }catch(err){
         console.log(err);
