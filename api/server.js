@@ -149,13 +149,15 @@ async function bookFinderSender(isbn, res) {
         */
         
         // Chasse aux livres
+        /*
         try{
             let cal = await c_pptr_cal(isbn)
             bookList.push(cal);
         }catch(err){
             console.log(err);
         }
-
+        */
+       
         // Amazon
         try{
             let ama = await c_pptr_amazon(isbn)

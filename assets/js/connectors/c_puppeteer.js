@@ -12,7 +12,8 @@ function c_puppeteer(isbn){
                 });
             },
             formatdata: async function(rawdata=null){
-                rawdatax = await this.rawdata();
+                let rawdatax = await this.rawdata();
+                console.log(rawdatax);
                 let bookList = [];
                 for(const book of rawdatax){
                     if(book.isbn == this.isbn){
