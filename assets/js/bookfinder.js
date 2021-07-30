@@ -123,7 +123,7 @@ function updateBookFinder(){
 
             div.innerHTML += 
             `
-            <div class="srchedBookBox foundBtooltip ${warning}" id="foundBook" box-id="${index}">
+            <div class="srchedBookBox foundBtooltip ${warning}" id="foundBook foundbook-${index}" box-id="${index}" thedata="${book}">
                 <div style="float: right; top: 0px; right: 0px; color: #b56357;">
                     ${book.ref_origin}
                 </div>
@@ -160,6 +160,8 @@ function updateBookFinder(){
         for(const box of foundBookBoxes){
             box.addEventListener('click', event => {
                 let dataIndex = box.getAttribute('box-id');
+                let thedatax = $(`#foundbook-${index}`).data('thedata');
+                console.log(thedatax);
                 updateForm(JSON.parse(window.localStorage.getItem('bookhistory'))[dataIndex]);
             });
         }
