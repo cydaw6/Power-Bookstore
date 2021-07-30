@@ -13,6 +13,7 @@ function c_puppeteer(isbn){
             },
             formatdata: async function(){
                 let rawdata = await this.rawdata();
+                console.log(rawdata)
                 let bookList = [];
                 for(const elem of rawdata){
                     if(elem != null){
