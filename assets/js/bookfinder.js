@@ -85,10 +85,11 @@ async function search(isbn){
 
     
     try{
-        let xx = c_puppeteer(isbn);
-        promises.push(xx.formatdata());
-        
-        //bookList.push(...(await x));
+        let xx= c_puppeteer(isbn);
+        // add books data to localStorage
+        window.localStorage.setItem('bookhistory', JSON.stringify( await xx.formatdata()));
+        // refresh shown references  
+        updateBookFinder();
     }catch(err){
         console.log(err);
     }
@@ -98,15 +99,8 @@ async function search(isbn){
     //https://blog.api.rakuten.net/top-10-best-books-apis/
     // cool project https://github.com/internetarchive/bookreader
 
+   
 
-    Promise.all(promises).then((values) => {
-        console.log(values);
-      });
-    // add books data to localStorage
-    window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
-    // refresh shown references  
-    updateBookFinder();
-    return bookList;
 }
 
 
