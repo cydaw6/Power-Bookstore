@@ -17,6 +17,7 @@ function c_puppeteer(isbn){
                 for(const book of rawdata){
                         bookList.push(book);
                 }
+                console.log(bookList)
                 return bookList;
             }
 

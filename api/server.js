@@ -114,7 +114,9 @@ app.listen(port, () => {
 
 /*  Function to search books and send result  */
 async function bookFinderSender(isbn, res) {
-    console.log(`-> New request for ${isbn}`)
+    let date =  new Date().toLocaleString();
+
+    console.log(`[${date}] : New request for ${isbn}`)
     try {
         let bookList = [];
         let promises = [];
@@ -150,16 +152,14 @@ async function bookFinderSender(isbn, res) {
         
         
         // Chasse aux livres
-        /*
+        
         try{
             let cal = c_pptr_cal(isbn)
             promises.push(cal);
         }catch(err){
             console.log(err);
         }
-        */
         
-
         // Amazon
         try{
             let ama = c_pptr_amazon(isbn);

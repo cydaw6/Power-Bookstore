@@ -97,7 +97,7 @@ module.exports = function() {
         };
         book.ref_origin = "Chasse aux livres";
     
-        return book;
+        return [book];
     }
 }
 

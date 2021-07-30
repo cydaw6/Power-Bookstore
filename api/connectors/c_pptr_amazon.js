@@ -102,7 +102,7 @@ module.exports = function() {
         },
         book.ref_origin = "Amazon"
     
-        return book;	
+        return [book];	
     }
 
 }

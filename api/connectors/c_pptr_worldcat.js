@@ -65,7 +65,7 @@ module.exports = function() {
             publisher: ["Editions", collection],
         };
     
-        return book;
+        return [book];
     }
 
 }

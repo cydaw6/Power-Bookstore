@@ -54,7 +54,7 @@ module.exports = function() {
                     book.description                = vi.description ? vi.description : null;
                     book.ref_origin                 = "Open Library";
     
-                    return book;
+                    return [book];
                 },
                 rawauthor: function(code){
                     return axios.get('https://openlibrary.org/authors/'+code+'.json');
