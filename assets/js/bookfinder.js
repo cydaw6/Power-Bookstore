@@ -36,7 +36,7 @@ async function search(isbn){
     try{ // Personal db
         
         const personal_database = c_db(isbn);
-       personal_database.formatdata().then(x => books.push(...x));
+       personal_database.formatdata().then(x => books.push(...x)).then(updateBookFinder());
 
     }catch (err){
         //console.log(`Error for personal db connector: ${err}`);
@@ -46,7 +46,7 @@ async function search(isbn){
     try{ // Google api
         
         const google = c_google(isbn);
-        google.formatdata().then(x => books.push(...x));
+        google.formatdata().then(x => books.push(...x)).then(updateBookFinder());
 
     }catch (err){
         console.log(`Error for google connector: ${err}`);
@@ -59,7 +59,7 @@ async function search(isbn){
             ISBN API https://openlibrary.org/dev/docs/api/books
         */
         const open_library = c_open_library(isbn);
-        open_library.formatdata().then(x => books.push(x));
+        open_library.formatdata().then(x => books.push(x)).then(updateBookFinder());
 
 
     }catch(err){
@@ -69,7 +69,7 @@ async function search(isbn){
     
     try{
         let xx = c_puppeteer(isbn);
-        xx.formatdata().then(x => books.push(...x));
+        xx.formatdata().then(x => books.push(...x)).then(updateBookFinder());
         
         //bookList.push(...(await x));
     }catch(err){
