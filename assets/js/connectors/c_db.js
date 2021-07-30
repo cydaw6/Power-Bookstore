@@ -16,7 +16,7 @@ function c_db(isbn){
                 let bookList = [];
                 for(const book of rawdata){
                     if(book.isbn == this.isbn){
-                        book.refOrigin = "already saved!";
+                        book.ref_origin = "already saved!";
                         bookList.push(book);
                     }
                 }

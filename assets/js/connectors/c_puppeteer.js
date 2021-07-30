@@ -7,7 +7,7 @@ function c_puppeteer(isbn){
             rawdata :  function () {
                 return $.ajax({
                 //url: "http://localhost:7045/books",
-                url: "https://cydaw6-power-bookstore-56jqp6pqh7qw6-7046.githubpreview.dev/books",
+                url: `https://cydaw6-power-bookstore-56jqp6pqh7qw6-7046.githubpreview.dev/isbn/${isbn}`,
                 dataType: "json"
                 });
             },
@@ -22,10 +22,13 @@ function c_puppeteer(isbn){
                 }
                 //return bookList;
                 //add books data to localStorage
-                window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
+                //window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
+                
                 // refresh shown references  
-                updateBookFinder();
-                console.log('done !');
+                //updateBookFinder();
+                console.log(bookList);
+                
+                return bookList;
             }
 
     };

@@ -64,7 +64,7 @@ function c_open_library(isbn){
                 book.thumbnail = vi.covers.length > 0 ? 'https://covers.openlibrary.org/b/id/'+vi.covers[0]+'-M.jpg' : null;
                 book.personalNote = null;
                 book.condition = null;
-                book.refOrigin = "Open Library";
+                book.ref_origin = "Open Library";
 
                 return book;
             },

@@ -78,9 +78,10 @@ async function search(isbn){
         //console.log(`Error for open library connector: ${err}`);
     }
 
+    
     try{
         let xx = c_puppeteer(isbn);
-        //xx.formatdata();
+        xx.formatdata().then(x => books.push(...x));
         
         //bookList.push(...(await x));
     }catch(err){
@@ -95,7 +96,8 @@ async function search(isbn){
     // add books data to localStorage
     window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
     // refresh shown references  
-    updateBookFinder(); 
+    updateBookFinder();
+    return bookList;
 }
 
 
@@ -123,7 +125,7 @@ function updateBookFinder(){
 
             div.innerHTML += 
             `
-            <div class="srchedBookBox foundBtooltip ${warning}" id="foundBook foundbook-${index}" box-id="${index}" thedata="${book}">
+            <div class="srchedBookBox foundBtooltip ${warning}" id="foundBook" box-id="${index}" thedata="${JSON.stringify(book)}">
                 <div style="float: right; top: 0px; right: 0px; color: #b56357;">
                     ${book.ref_origin}
                 </div>
@@ -154,14 +156,18 @@ function updateBookFinder(){
             </div>
             `;
     }
+        /*
+         let xx = $(`foundBook${x}`).data('thedata');
 
+                console.log(xx.ref_origin);
+
+        */
         // add event on click to book cards to give index of current book in cache
         foundBookBoxes = document.querySelectorAll('#foundBook');
         for(const box of foundBookBoxes){
             box.addEventListener('click', event => {
                 let dataIndex = box.getAttribute('box-id');
-                let thedatax = $(`#foundbook-${index}`).data('thedata');
-                console.log(thedatax);
+                console.log(books);
                 updateForm(JSON.parse(window.localStorage.getItem('bookhistory'))[dataIndex]);
             });
         }
