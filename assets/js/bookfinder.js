@@ -39,7 +39,7 @@ async function search(isbn){
        personal_database.formatdata().then(x => books.push(...x)).then(updateBookFinder());
 
     }catch (err){
-        //console.log(`Error for personal db connector: ${err}`);
+        console.log(`Error for personal db connector: ${err}`);
     }
 
 
@@ -63,7 +63,7 @@ async function search(isbn){
 
 
     }catch(err){
-        //console.log(`Error for open library connector: ${err}`);
+        console.log(`Error for open library connector: ${err}`);
     }
 
     
@@ -93,8 +93,6 @@ async function search(isbn){
 /* Dynamic found books cards and tooltip */
 
 function updateBookFinder(){
-    console.log('ok');
-    console.log(books)
     // retrieve cache
     let foundReferences = books;
     foundReferences = foundReferences ? foundReferences : [];
@@ -106,7 +104,7 @@ function updateBookFinder(){
         /* fill up the div with books data */
         for (let index = 0; index < foundReferences.length; index++) {
             let book = foundReferences[index];
-
+            console.log('ok');
             let warning = '';
             if(book.refOrigin == 'already saved!'){
                 warning = 'warning-box';
