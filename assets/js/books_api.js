@@ -1,7 +1,7 @@
 
 
 
-function c_puppeteer(isbn){
+function books_api(isbn){
     return {
             isbn: isbn,
             rawdata :  function () {

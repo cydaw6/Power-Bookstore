@@ -118,80 +118,27 @@ async function bookFinderSender(isbn, res) {
 
     console.log(`[${date}] : New request for ${isbn}`)
     try {
-        let bookList = [];
-        let promises = [];
 
-      
-        // Google
-        const google = c_google('2253168688');
-        promises.push(google.formatdata());
- 
-        
-        // Open library
-        const open_library = c_open_library('2253168688');
-        promises.push(open_library.formatdata());
-        
-        
-        promises.push(Bookstore.find(null, function(err, x) {
-                                if (err){
-                                    throw err;
-                                }
-                                let books = [];
-                                
-                                return JSON.stringify(x, null, 4);
-                                
-                            }));
+        let connectors = [
+            c_google(isbn),                         // Google
+            c_open_library(isbn),                   // Open library
+            Bookstore.find(null, function(err, x) { // Own db
+                if (err){ throw err; }
+                return JSON.stringify(x, null, 4);
+            }),
+            c_pptr_cal(isbn),                       // chasse aux livres trough puppeteer
+            c_pptr_amazon(isbn),                    // amazon trough puppeteer
+            c_pptr_worldcat(isbn),                  // worldcat trough puppeteer
+        ]
 
-        /*
-        personal_db.forEach(book =>{
-            book.ref_origin = "owned"
-            bookList.push(book);
-        })
-        */
-
-        
-        
-        // Chasse aux livres
-        
-        try{
-            let cal = c_pptr_cal(isbn)
-            promises.push(cal);
-        }catch(err){
-            console.log(err);
-        }
-        
-        // Amazon
-        try{
-            let ama = c_pptr_amazon(isbn);
-            promises.push(ama);
-            //bookList.push(ama);
-        }catch(err){
-            console.log(err);
-        }
-
-        // Worlcat
-        try{
-            let wor = c_pptr_worldcat(isbn);
-            promises.push(wor);
-            //bookList.push(wor);
-        }catch(err){
-            console.log(err);
-        }
-
-        Promise.all(promises).then(
+        Promise.all(connectors).then(
             (books) => res.end((JSON.stringify(books, null, '\t'))) // output de l'api
         );
 
-        //bookList = bookList?.filter(book => ((book.isbn_10 == isbn) || (book.isbn_13 == isbn)));
-
-        
-  
     } catch (error) {
       console.error(error);
     }
-  } 
-
-
+} 
 
 
 /* ADD A DOCUMENT TO DB

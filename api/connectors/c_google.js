@@ -3,14 +3,8 @@ const axios = require('axios');
 require('./globals')();
 
 module.exports = function() {
-    this.c_google = function(isbn){
-        return {
-                isbn: isbn,
-                rawdata :  function () {
-                    return axios.get('https://www.googleapis.com/books/v1/volumes?q=isbn:'+isbn);
-                },
-                formatdata: async function(){
-                    let rawdata = await this.rawdata();
+    this.c_google = async function(isbn){
+                    let rawdata = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`);
                     let bookList = [];
                     let book = BookShell();
     
@@ -34,8 +28,5 @@ module.exports = function() {
                         bookList.push(book);
                     }
                     return bookList;
-                }
-        };
-    }
-
+                };
 }

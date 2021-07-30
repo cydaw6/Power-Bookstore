@@ -16,7 +16,7 @@ async function search(isbn){
     window.localStorage.setItem('bookhistory', JSON.stringify([]));
     
     try{
-        let xx= c_puppeteer(isbn);
+        let xx = books_api(isbn);
         // add books data to localStorage
         window.localStorage.setItem('bookhistory', JSON.stringify( await xx.formatdata()));
         // refresh shown references  
@@ -46,7 +46,7 @@ function updateBookFinder(){
             let book = foundReferences[index];
 
             let warning = '';
-            if(book.refOrigin == 'already saved!'){
+            if(book.ref_origin == 'already saved!' || book.ref_origin == null){
                 warning = 'warning-box';
             }
 

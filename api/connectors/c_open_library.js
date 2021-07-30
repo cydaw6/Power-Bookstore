@@ -2,15 +2,8 @@ const axios = require('axios');
 require('./globals')();
 
 module.exports = function() {
-    this.c_open_library = function(isbn){
-        return {
-                isbn: isbn,
-                rawdata :  function () {
-                  return axios.get('https://openlibrary.org/isbn/'+isbn+'.json');
-                },
-                formatdata: async function(){
-                    let rawdata = await this.rawdata();
-                    let bookList = [];
+    this.c_open_library = async function(isbn){
+                    let rawdata = await axios.get(`https://openlibrary.org/isbn/${isbn}.json`);
                     let book = BookShell();
                     const vi = rawdata.data;
     
@@ -18,8 +11,7 @@ module.exports = function() {
                     let ppl = [];
                     for (let index = 0; index < vi.authors.length; index++) {
                         const element = vi.authors[index];
-                        
-                        const curr_author = await this.rawauthor(element.key.substring(9));
+                        const curr_author = await axios.get(`https://openlibrary.org/authors/${element.key.substring(9)}.json`);
                         ppl.push(curr_author.data.name);
                     }
 
@@ -53,13 +45,6 @@ module.exports = function() {
                     book.thumbnail                  = vi.covers.length > 0 ? 'https://covers.openlibrary.org/b/id/'+vi.covers[0]+'-M.jpg' : null;
                     book.description                = vi.description ? vi.description : null;
                     book.ref_origin                 = "Open Library";
-    
                     return [book];
-                },
-                rawauthor: function(code){
-                    return axios.get('https://openlibrary.org/authors/'+code+'.json');
-                }
-        };
-    }
-
+                };
 }
