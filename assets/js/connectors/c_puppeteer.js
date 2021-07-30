@@ -19,7 +19,7 @@ function c_puppeteer(isbn){
                     
                     let elem = rawdata[index];
                     
-                    if(elem != null){
+                    if(elem){
                         console.log(elem)
                         bookList.concat(elem);
                     }
