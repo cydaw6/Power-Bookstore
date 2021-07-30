@@ -80,7 +80,7 @@ async function search(isbn){
 
     try{
         let xx = c_puppeteer(isbn);
-        xx.formatdata();
+        //xx.formatdata();
         
         //bookList.push(...(await x));
     }catch(err){
