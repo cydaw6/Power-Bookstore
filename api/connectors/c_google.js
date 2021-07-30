@@ -9,7 +9,8 @@ module.exports = function() {
                 rawdata :  function () {
                     return axios.get('https://www.googleapis.com/books/v1/volumes?q=isbn:'+isbn);
                 },
-                formatdata: function(rawdata){
+                formatdata: async function(){
+                    let rawdata = await this.rawdata();
                     let bookList = [];
                     let book = BookShell();
     

@@ -114,24 +114,23 @@ app.listen(port, () => {
 
 /*  Function to search books and send result  */
 async function bookFinderSender(isbn, res) {
+    console.log(`-> New request for ${isbn}`)
     try {
-      let bookList = [];
+        let bookList = [];
+        let promises = [];
 
-      /*
+      
         // Google
         const google = c_google('2253168688');
-        const g_formated_data = await google.formatdata(await google.rawdata());
-        g_formated_data.forEach(book => {
-            console.log()
-            bookList.push(book)
-        });
+        promises.push(google.formatdata());
+ 
         
         // Open library
         const open_library = c_open_library('2253168688');
-        const o_formated_data = await open_library.formatdata(await open_library.rawdata());
-        bookList.push(o_formated_data);
+        promises.push(open_library.formatdata());
         
-        const personal_db = await Bookstore.find(null, function(err, x) {
+        
+        promises.push(Bookstore.find(null, function(err, x) {
                                 if (err){
                                     throw err;
                                 }
@@ -139,44 +138,53 @@ async function bookFinderSender(isbn, res) {
                                 
                                 return JSON.stringify(x, null, 4);
                                 
-                            });
-  
+                            }));
+
+        /*
         personal_db.forEach(book =>{
             book.ref_origin = "owned"
             bookList.push(book);
         })
-
         */
+
+        
         
         // Chasse aux livres
         /*
         try{
-            let cal = await c_pptr_cal(isbn)
-            bookList.push(cal);
+            let cal = c_pptr_cal(isbn)
+            promises.push(cal);
         }catch(err){
             console.log(err);
         }
         */
-       
+        
+
         // Amazon
         try{
-            let ama = await c_pptr_amazon(isbn)
-            bookList.push(ama);
+            let ama = c_pptr_amazon(isbn);
+            promises.push(ama);
+            //bookList.push(ama);
         }catch(err){
             console.log(err);
         }
 
         // Worlcat
         try{
-            let wor = await c_pptr_worldcat(isbn)
-            bookList.push(wor);
+            let wor = c_pptr_worldcat(isbn);
+            promises.push(wor);
+            //bookList.push(wor);
         }catch(err){
             console.log(err);
         }
 
+        Promise.all(promises).then(
+            (books) => res.end((JSON.stringify(books, null, '\t'))) // output de l'api
+        );
+
         //bookList = bookList?.filter(book => ((book.isbn_10 == isbn) || (book.isbn_13 == isbn)));
 
-        res.end((JSON.stringify(bookList, null, '\t'))); // output de l'api
+        
   
     } catch (error) {
       console.error(error);

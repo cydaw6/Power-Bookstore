@@ -33,16 +33,17 @@ async function search(isbn){
     }
     */
 
+    /*
     try{ // Personal db
         
         const personal_database = c_db(isbn);
         let db_formated_data = personal_database.formatdata();
         promises.push(db_formated_data);
-        /*
+        
         db_formated_data.forEach(book =>{
             bookList.push(book);
         })
-        */
+        
         
 
     }catch (err){
@@ -55,12 +56,12 @@ async function search(isbn){
         const google = c_google(isbn);
         let g_formated_data = google.formatdata();
         promises.push(g_formated_data);
-        /*
+        
         g_formated_data.forEach(book => {
             console.log()
             bookList.push(book)
         });
-        */
+        
         
     }catch (err){
         console.log(`Error for google connector: ${err}`);
@@ -68,10 +69,10 @@ async function search(isbn){
     
     
     try{ // Open Library api
-        /*
+        
             https://openlibrary.org/developers/api
             ISBN API https://openlibrary.org/dev/docs/api/books
-        */
+        
         const open_library = c_open_library(isbn);
         let o_formated_data = open_library.formatdata();
         promises.push(o_formated_data);
@@ -80,6 +81,7 @@ async function search(isbn){
     }catch(err){
         //console.log(`Error for open library connector: ${err}`);
     }
+    */
 
     
     try{

@@ -31,7 +31,7 @@ module.exports = function() {
         // Chasse aux livres
         await page.goto(`https://www.chasse-aux-livres.fr/prix/${isbn}`);
         page.waitForXPath('//*[@id="offers-table"]');
-        page.waitForTimeout(1500);
+        page.waitForXPath('//*[@id="recap-new"]/div[2]/a');
         // new price
         const [x] = await page.$x('//*[@id="recap-new"]/div[2]/a');
         const priceN = parseFloat((await (await x.getProperty('textContent')).jsonValue()).replace(',', '.'));

@@ -8,7 +8,8 @@ module.exports = function() {
                 rawdata :  function () {
                   return axios.get('https://openlibrary.org/isbn/'+isbn+'.json');
                 },
-                formatdata: async function(rawdata){
+                formatdata: async function(){
+                    let rawdata = await this.rawdata();
                     let bookList = [];
                     let book = BookShell();
                     const vi = rawdata.data;
