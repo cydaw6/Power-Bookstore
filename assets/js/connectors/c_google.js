@@ -17,7 +17,7 @@ function c_google(isbn){
                 });
             },
             formatdata: async function(){
-                rawdata = await this.rawdata();
+                let rawdata = await this.rawdata();
                 let bookList = [];
                 let book = {}
 
@@ -47,6 +47,7 @@ function c_google(isbn){
                     
                     bookList.push(book);
                 }
+
                 return bookList;
             }
     };

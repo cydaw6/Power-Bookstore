@@ -11,7 +11,7 @@ async function search(isbn){
     // clear cache
     window.localStorage.setItem('bookhistory', JSON.stringify([]));
     let bookList = [];
-    books = [];
+    let promises = [];
     // Other api
     /*
     try{
@@ -36,18 +36,32 @@ async function search(isbn){
     try{ // Personal db
         
         const personal_database = c_db(isbn);
-       personal_database.formatdata().then(x => books.push(...x)).then(updateBookFinder());
+        let db_formated_data = personal_database.formatdata();
+        promises.push(db_formated_data);
+        /*
+        db_formated_data.forEach(book =>{
+            bookList.push(book);
+        })
+        */
+        
 
     }catch (err){
-        console.log(`Error for personal db connector: ${err}`);
+        //console.log(`Error for personal db connector: ${err}`);
     }
 
 
     try{ // Google api
         
         const google = c_google(isbn);
-        google.formatdata().then(x => books.push(...x)).then(updateBookFinder());
-
+        let g_formated_data = google.formatdata();
+        promises.push(g_formated_data);
+        /*
+        g_formated_data.forEach(book => {
+            console.log()
+            bookList.push(book)
+        });
+        */
+        
     }catch (err){
         console.log(`Error for google connector: ${err}`);
     }
@@ -59,33 +73,38 @@ async function search(isbn){
             ISBN API https://openlibrary.org/dev/docs/api/books
         */
         const open_library = c_open_library(isbn);
-        open_library.formatdata().then(x => books.push(x)).then(updateBookFinder());
-
+        let o_formated_data = open_library.formatdata();
+        promises.push(o_formated_data);
+       // bookList.push(o_formated_data);
 
     }catch(err){
-        console.log(`Error for open library connector: ${err}`);
+        //console.log(`Error for open library connector: ${err}`);
     }
 
     
     try{
         let xx = c_puppeteer(isbn);
-        xx.formatdata().then(x => books.push(...x)).then(updateBookFinder());
+        promises.push(xx.formatdata());
         
         //bookList.push(...(await x));
     }catch(err){
         console.log(err);
     }
     
+    
     // https://www.programmableweb.com/news/10-most-popular-apis-books/brief/2020/01/26
     //https://blog.api.rakuten.net/top-10-best-books-apis/
     // cool project https://github.com/internetarchive/bookreader
 
 
+    Promise.all(promises).then((values) => {
+        console.log(values);
+      });
     // add books data to localStorage
     window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
     // refresh shown references  
     updateBookFinder();
-    return books;
+    return bookList;
 }
 
 
@@ -93,8 +112,9 @@ async function search(isbn){
 /* Dynamic found books cards and tooltip */
 
 function updateBookFinder(){
+
     // retrieve cache
-    let foundReferences = books;
+    let foundReferences = JSON.parse(window.localStorage.getItem('bookhistory'));
     foundReferences = foundReferences ? foundReferences : [];
 
     if(foundReferences.length > 0){
@@ -104,7 +124,7 @@ function updateBookFinder(){
         /* fill up the div with books data */
         for (let index = 0; index < foundReferences.length; index++) {
             let book = foundReferences[index];
-            console.log('ok');
+
             let warning = '';
             if(book.refOrigin == 'already saved!'){
                 warning = 'warning-box';
@@ -155,7 +175,7 @@ function updateBookFinder(){
             box.addEventListener('click', event => {
                 let dataIndex = box.getAttribute('box-id');
                 console.log(books);
-                //updateForm(JSON.parse(window.localStorage.getItem('bookhistory'))[dataIndex]);
+                updateForm(JSON.parse(window.localStorage.getItem('bookhistory'))[dataIndex]);
             });
         }
 
