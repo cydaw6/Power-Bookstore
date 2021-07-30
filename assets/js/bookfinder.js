@@ -93,7 +93,8 @@ async function search(isbn){
 /* Dynamic found books cards and tooltip */
 
 function updateBookFinder(){
-
+    console.log('ok');
+    console.log(books)
     // retrieve cache
     let foundReferences = books;
     foundReferences = foundReferences ? foundReferences : [];
