@@ -13,15 +13,11 @@ function c_puppeteer(isbn){
             },
             formatdata: async function(){
                 let rawdata = await this.rawdata();
-                console.log(rawdata)
                 let bookList = [];
                 for (let index = 0; index < rawdata.length; index++) {
-                    
                     let elem = rawdata[index];
-                    
                     if(elem){
-                        console.log(elem)
-                        bookList.concat(elem);
+                        bookList.push.apply(bookList, elem);
                     }
                 }
                 console.log(bookList)
