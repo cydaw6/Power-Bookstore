@@ -16,7 +16,7 @@ function c_google(isbn){
                 dataType: "json"
                 });
             },
-            formatdata: function(){
+            formatdata: async function(){
                 rawdata = await this.rawdata();
                 let bookList = [];
                 let book = {}
