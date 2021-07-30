@@ -13,7 +13,8 @@ function c_open_library(isbn){
                     dataType: "json"
                     });
             },
-            formatdata: async function(rawdata){
+            formatdata: async function(){
+                let rawdata = await this.rawdata();
                 let bookList = [];
                 let book = {};
                 const vi = rawdata;

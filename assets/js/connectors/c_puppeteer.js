@@ -11,24 +11,15 @@ function c_puppeteer(isbn){
                 dataType: "json"
                 });
             },
-            formatdata: async function(rawdata=null){
-                let rawdatax = await this.rawdata();
-                console.log(rawdatax);
+            formatdata: async function(){
+                let rawdata = await this.rawdata();
                 let bookList = [];
-                for(const book of rawdatax){
+                for(const book of rawdata){
                     if(book.isbn == this.isbn){
                         book.refOrigin = "already saved!";
                         bookList.push(book);
                     }
                 }
-                //return bookList;
-                //add books data to localStorage
-                //window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
-                
-                // refresh shown references  
-                //updateBookFinder();
-                console.log(bookList);
-                
                 return bookList;
             }
 

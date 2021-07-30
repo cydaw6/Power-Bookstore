@@ -11,7 +11,7 @@ async function search(isbn){
     // clear cache
     window.localStorage.setItem('bookhistory', JSON.stringify([]));
     let bookList = [];
-
+    books = [];
     // Other api
     /*
     try{
@@ -36,12 +36,7 @@ async function search(isbn){
     try{ // Personal db
         
         const personal_database = await c_db(isbn);
-        const db_rawdata = await personal_database.rawdata();
-        let db_formated_data = await personal_database.formatdata(await db_rawdata);
-        db_formated_data.forEach(book =>{
-            bookList.push(book);
-        })
-        
+       personal_database.formatdata().then(x => books.push(...x));
 
     }catch (err){
         //console.log(`Error for personal db connector: ${err}`);
@@ -51,14 +46,8 @@ async function search(isbn){
     try{ // Google api
         
         const google = await (c_google(isbn));
-        const g_rawdata = await google.rawdata();
-        let g_formated_data = await google.formatdata(await g_rawdata);
+        google.formatdata().then(x => books.push(...x));
 
-        g_formated_data.forEach(book => {
-            console.log()
-            bookList.push(book)
-        });
-        
     }catch (err){
         console.log(`Error for google connector: ${err}`);
     }
@@ -70,9 +59,8 @@ async function search(isbn){
             ISBN API https://openlibrary.org/dev/docs/api/books
         */
         const open_library = await c_open_library(isbn);
-        const o_rawdata = await open_library.rawdata();
-        let o_formated_data = await open_library.formatdata(await o_rawdata);
-        bookList.push(o_formated_data);
+        open_library.formatdata().then(x => books.push(...x));
+
 
     }catch(err){
         //console.log(`Error for open library connector: ${err}`);
@@ -97,7 +85,7 @@ async function search(isbn){
     window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
     // refresh shown references  
     updateBookFinder();
-    return bookList;
+    return books;
 }
 
 
@@ -107,7 +95,7 @@ async function search(isbn){
 function updateBookFinder(){
 
     // retrieve cache
-    let foundReferences = JSON.parse(window.localStorage.getItem('bookhistory'));
+    let foundReferences = books;
     foundReferences = foundReferences ? foundReferences : [];
 
     if(foundReferences.length > 0){
@@ -168,7 +156,7 @@ function updateBookFinder(){
             box.addEventListener('click', event => {
                 let dataIndex = box.getAttribute('box-id');
                 console.log(books);
-                updateForm(JSON.parse(window.localStorage.getItem('bookhistory'))[dataIndex]);
+                //updateForm(JSON.parse(window.localStorage.getItem('bookhistory'))[dataIndex]);
             });
         }
 

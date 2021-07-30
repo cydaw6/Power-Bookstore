@@ -12,7 +12,8 @@ function c_db(isbn){
                 dataType: "json"
                 });
             },
-            formatdata: async function(rawdata){
+            formatdata: async function(){
+                let rawdata = await this.rawdata();
                 let bookList = [];
                 for(const book of rawdata){
                     if(book.isbn == this.isbn){
