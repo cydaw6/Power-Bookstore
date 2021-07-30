@@ -15,7 +15,8 @@ function c_puppeteer(isbn){
                 let rawdata = await this.rawdata();
                 console.log(rawdata)
                 let bookList = [];
-                for(const elem of rawdata){
+                for (let index = 0; index < rawdata.length; index++) {
+                    let elem = rawdata[index];
                     if(elem != null){
                         bookList.concat(elem);
                     }
