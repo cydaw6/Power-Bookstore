@@ -24,7 +24,8 @@ function c_puppeteer(isbn){
                 //add books data to localStorage
                 window.localStorage.setItem('bookhistory', JSON.stringify(bookList));
                 // refresh shown references  
-                updateBookFinder(); 
+                updateBookFinder();
+                console.log('done !');
             }
 
     };
