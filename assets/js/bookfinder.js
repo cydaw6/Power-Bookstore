@@ -35,7 +35,7 @@ async function search(isbn){
 
     try{ // Personal db
         
-        const personal_database = await c_db(isbn);
+        const personal_database = c_db(isbn);
        personal_database.formatdata().then(x => books.push(...x));
 
     }catch (err){
@@ -45,7 +45,7 @@ async function search(isbn){
 
     try{ // Google api
         
-        const google = await (c_google(isbn));
+        const google = c_google(isbn);
         google.formatdata().then(x => books.push(...x));
 
     }catch (err){
@@ -58,8 +58,8 @@ async function search(isbn){
             https://openlibrary.org/developers/api
             ISBN API https://openlibrary.org/dev/docs/api/books
         */
-        const open_library = await c_open_library(isbn);
-        open_library.formatdata().then(x => books.push(...x));
+        const open_library = c_open_library(isbn);
+        open_library.formatdata().then(x => books.push(x));
 
 
     }catch(err){

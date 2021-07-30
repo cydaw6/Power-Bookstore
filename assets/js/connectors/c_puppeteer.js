@@ -15,10 +15,7 @@ function c_puppeteer(isbn){
                 let rawdata = await this.rawdata();
                 let bookList = [];
                 for(const book of rawdata){
-                    if(book.isbn == this.isbn){
-                        book.refOrigin = "already saved!";
                         bookList.push(book);
-                    }
                 }
                 return bookList;
             }
