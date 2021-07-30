@@ -99,7 +99,8 @@ module.exports = function() {
                     avg:  parseFloat((allusedPrices.reduce((a, b) => a + b) / allusedPrices.length).toLocaleString("en-EN")),
                     number: allusedPrices.length
                 }
-        }
+        },
+        book.ref_origin = "Amazon"
     
         return book;	
     }

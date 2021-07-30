@@ -11,7 +11,7 @@ module.exports = function() {
                 },
                 formatdata: function(rawdata){
                     let bookList = [];
-                    let book = new BookShell();
+                    let book = BookShell();
     
                     for(const bookData of rawdata.data.items){
                         let vi = bookData.volumeInfo;

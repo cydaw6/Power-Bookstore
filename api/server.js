@@ -15,6 +15,7 @@ require('./connectors/c_pptr_cal')();
 const fs = require("fs");
 // Mongoose
 const mongoose = require('mongoose');
+const c_pptr_worldcat = require('./connectors/c_pptr_worldcat');
 
 
 /*----  Mongoose connection and schemas ---- */
@@ -116,6 +117,7 @@ async function bookFinderSender(isbn, res) {
     try {
       let bookList = [];
 
+      /*
         // Google
         const google = c_google('2253168688');
         const g_formated_data = await google.formatdata(await google.rawdata());
@@ -140,19 +142,39 @@ async function bookFinderSender(isbn, res) {
                             });
   
         personal_db.forEach(book =>{
+            book.ref_origin = "owned"
             bookList.push(book);
         })
+
+        */
         
+        // Chasse aux livres
         try{
-            bookList.push(await c_pptr_cal(isbn));
+            let cal = await c_pptr_cal(isbn)
+            bookList.push(cal);
         }catch(err){
             console.log(err);
         }
 
+        // Amazon
+        try{
+            let ama = await c_pptr_amazon(isbn)
+            bookList.push(ama);
+        }catch(err){
+            console.log(err);
+        }
 
-        bookList = bookList?.filter(book => (book.isbn_10 == isbn) || (book.isbn_13 == isbn));
+        // Worlcat
+        try{
+            let wor = await c_pptr_worldcat(isbn)
+            bookList.push(wor);
+        }catch(err){
+            console.log(err);
+        }
 
-        res.end((JSON.stringify(bookList, null, 4))); // output de l'api
+        //bookList = bookList?.filter(book => ((book.isbn_10 == isbn) || (book.isbn_13 == isbn)));
+
+        res.end((JSON.stringify(bookList, null, '\t'))); // output de l'api
   
     } catch (error) {
       console.error(error);

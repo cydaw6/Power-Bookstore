@@ -10,7 +10,7 @@ module.exports = function() {
                 },
                 formatdata: async function(rawdata){
                     let bookList = [];
-                    let book = new BookShell();
+                    let book = BookShell();
                     const vi = rawdata.data;
     
                     //-- Authors
@@ -43,8 +43,8 @@ module.exports = function() {
                     let year = date[1].trim();
                     book.publishedDate              = `${day}-${month}-${year}`;
 
-                    book.isbn_10                    = vi.isbn_10;
-                    book.isbn_13                    = vi.isbn_13;
+                    book.isbn_10                    = vi.isbn_10.join();
+                    book.isbn_13                    = vi.isbn_13.join();
                     book.title                      = vi.title;
                     book.publisher                  = vi.publishers[0];
                     book.page_count                 = vi.number_of_pages;

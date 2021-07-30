@@ -12,14 +12,9 @@ async function search(isbn){
     window.localStorage.setItem('bookhistory', JSON.stringify([]));
     let bookList = [];
 
-    try{
-        let x = await $.ajax({
-            url: "https://cydaw6-power-bookstore-56jqp6pqh7qw6-7046.githubpreview.dev/isbn/"+isbn,
-            dataType: "json"
-            });
-    }catch(err){
-        console.log(err);
-    }
+    
+
+    
 
     // Other api
     try{
@@ -69,7 +64,8 @@ async function search(isbn){
     }catch (err){
         console.log(`Error for google connector: ${err}`);
     }
-        
+    
+    
     try{ // Open Library api
         /*
             https://openlibrary.org/developers/api
@@ -84,9 +80,16 @@ async function search(isbn){
         //console.log(`Error for open library connector: ${err}`);
     }
 
-
-    
-    
+    try{
+        let x = await $.ajax({
+            url: "https://cydaw6-power-bookstore-56jqp6pqh7qw6-7046.githubpreview.dev/isbn/"+isbn,
+            dataType: "json"
+            });
+        console.log(x);
+        //bookList.push(...(await x));
+    }catch(err){
+        console.log(err);
+    }
     
     // https://www.programmableweb.com/news/10-most-popular-apis-books/brief/2020/01/26
     //https://blog.api.rakuten.net/top-10-best-books-apis/
@@ -126,7 +129,7 @@ function updateBookFinder(){
             `
             <div class="srchedBookBox foundBtooltip ${warning}" id="foundBook" box-id="${index}">
                 <div style="float: right; top: 0px; right: 0px; color: #b56357;">
-                    ${book.refOrigin}
+                    ${book.ref_origin}
                 </div>
                 <div class="row">
                     ${book.title}
@@ -135,7 +138,7 @@ function updateBookFinder(){
                     ${book.authors}
                 </div>
                 <div class="row" style="font-size: 0.8em; color: grey; padding-left: 1em;">
-                    ${book.publishedDate}
+                    ${book.published_date}
                 </div>
                 <span class="tooltipBox">
                     <table style="height: 100px;">
@@ -146,7 +149,7 @@ function updateBookFinder(){
                                 <br>
                                 <b>${book.title}</b>
                                 <br>${book.authors}
-                                <br>${book.publishedDate}
+                                <br>${book.published_date}
                             </td>
                         </tr>
                         </tbody>

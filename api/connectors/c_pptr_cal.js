@@ -79,10 +79,10 @@ module.exports = function() {
         }, priceN); 
         
         browser.close();
-    
+        
         let book = BookShell();
         book.title = title;
-        book.authors = author;
+        book.authors = [author];
         book.isbn_10 = isbn_10;
         book.isbn_13 = isbn_13;
         book.selling_price = priceN;
